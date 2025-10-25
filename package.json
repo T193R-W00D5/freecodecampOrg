@@ -1,0 +1,22 @@
+{
+  "name": "freecodecamporg-website-copies",
+  "version": "1.0.0",
+  "description": "This is a webiste to page copies of freecodecamp.org's course pages 1) Open a new terminal inside VS Code pointed to your project root folder location. 2) Run from terminal: node server.js  3) Open <http://localhost:3010> in your browser. You should see the webpage!",
+  "main": "./src/script.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@jest/globals": "^30.0.4",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.4"
+  },
+  "volta": {
+    "node": "22.21.0"
+  }
+}
