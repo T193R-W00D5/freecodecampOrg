@@ -31,152 +31,77 @@ jobs:
           NODE_PIN=$(python -c "import json,sys; print(json.load(open('package.json')).get('volta', {}).get('node', ''))")
           if [ -z "$NODE_PIN" ]; then echo "volta.node not found in package.json"; exit 1; fi
           echo "PIN=$NODE_PIN" >> $GITHUB_ENV
-
       - name: Check coverage
         id: check
         run: |
-          python - <<'PY'
-            import os, json, sys
-            pin = os.environ.get('PIN')
-            if not pin:
-                print('volta.node not found in package.json', file=sys.stderr)
-                sys.exit(1)
-            matrix_json = os.environ.get('MATRIX_NODE_VERSIONS', '[]')
-            try:
-                entries = json.loads(matrix_json)
-            except Exception as e:
-                name: Node.js CI
+          python -c "import os,json,sys; pin=os.environ.get('PIN'); if not pin: print('volta.node not found in package.json', file=sys.stderr); sys.exit(1); entries=json.loads(os.environ.get('MATRIX_NODE_VERSIONS','[]')); pin_major=pin.split('.')[0]; covered = any(entry==pin or (isinstance(entry,str) and entry.endswith('.x') and entry.split('.')[0]==pin_major) for entry in entries); if covered: print('covered=true'); sys.exit(0); print(f'ERROR: pinned node {pin} is NOT covered by compatibility matrix (entries: {entries})', file=sys.stderr); sys.exit(2)'
 
-                # Configure matrix entries here as a JSON array string. Update this to change
-                # the compatibility matrix without editing the jobs below.
-                # Example: keep majors and also add an exact pinned version:
-                #   MATRIX_NODE_VERSIONS: '["18.x","20.x","21.x","22.x","22.21.0"]'
-                env:
-                  MATRIX_NODE_VERSIONS: '["18.x", "20.x", "21.x", "22.x"]'
+  compatibility:
+    name: Compatibility matrix
+    runs-on: ubuntu-latest
+    needs: assert_matrix
+    strategy:
+      matrix:
+        node-version: ${{ fromJson(env.MATRIX_NODE_VERSIONS) }}
+    steps:
+      - uses: actions/checkout@v4
 
-                on:
-                  push:
-                    branches: [ "main" ]
-                  pull_request:
-                    branches: [ "main" ]
+      - name: "Debug: print configured MATRIX_NODE_VERSIONS"
+        run: |
+          echo "MATRIX_NODE_VERSIONS = $MATRIX_NODE_VERSIONS"
 
-                jobs:
-                  assert_matrix:
-                    name: Assert pinned Node is covered by compatibility matrix
-                    runs-on: ubuntu-latest
-                    steps:
-                      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-                      - name: Read pinned Node version from package.json
-                        id: read_pin
-                        run: |
-                          NODE_PIN=$(python -c "import json,sys; print(json.load(open('package.json')).get('volta', {}).get('node', ''))")
-                          if [ -z "$NODE_PIN" ]; then echo "volta.node not found in package.json"; exit 1; fi
-                          echo "PIN=$NODE_PIN" >> $GITHUB_ENV
+      - name: Verify Node
+        run: |
+          node -v
 
-                      - name: Check coverage
-                        id: check
-                        run: |
-                          python - <<'PY'
-                            import os, json, sys
-                            pin = os.environ.get('PIN')
-                            if not pin:
-                                print('volta.node not found in package.json', file=sys.stderr)
-                                sys.exit(1)
-                            matrix_json = os.environ.get('MATRIX_NODE_VERSIONS', '[]')
-                            try:
-                                entries = json.loads(matrix_json)
-                            except Exception as e:
-                                print('Failed to parse MATRIX_NODE_VERSIONS:', e, file=sys.stderr)
-                                sys.exit(1)
-                            pin_major = pin.split('.')[0]
-                            covered = False
-                            for entry in entries:
-                                if entry == pin:
-                                    covered = True
-                                    break
-                                if entry.endswith('.x'):
-                                    try:
-                                        maj = entry.split('.')[0]
-                                    except Exception:
-                                        continue
-                                    if maj == pin_major:
-                                        covered = True
-                                        break
-                            if covered:
-                                print('covered=true')
-                                sys.exit(0)
-                            else:
-                                print(f'ERROR: pinned node {pin} is NOT covered by compatibility matrix (entries: {entries})', file=sys.stderr)
-                                sys.exit(2)
-                          PY
+      - name: Install dependencies
+        run: npm ci
 
-                  compatibility:
-                    name: Compatibility matrix
-                    runs-on: ubuntu-latest
-                    needs: assert_matrix
-                    strategy:
-                      matrix:
-                        node-version: ${{ fromJson(env.MATRIX_NODE_VERSIONS) }}
-                    steps:
-                      - uses: actions/checkout@v4
+      - name: Build
+        run: npm run build --if-present
 
-                      - name: "Debug: print configured MATRIX_NODE_VERSIONS"
-                        run: |
-                          echo "MATRIX_NODE_VERSIONS = $MATRIX_NODE_VERSIONS"
+      - name: Test
+        run: npm test
 
-                      - name: Setup Node.js
-                        uses: actions/setup-node@v4
-                        with:
-                          node-version: ${{ matrix.node-version }}
-                          cache: 'npm'
+  pinned:
+    name: Pinned node from package.json
+    runs-on: ubuntu-latest
+    needs: assert_matrix
+    steps:
+      - uses: actions/checkout@v4
 
-                      - name: Verify Node
-                        run: |
-                          node -v
+      - name: Read pinned Node version from package.json
+        id: node_pin
+        run: |
+          NODE_PIN=$(python -c "import json,sys; print(json.load(open('package.json')).get('volta', {}).get('node', ''))")
+          if [ -z "$NODE_PIN" ]; then echo "volta.node not found in package.json"; exit 1; fi
+          echo "version=$NODE_PIN" >> $GITHUB_OUTPUT
 
-                      - name: Install dependencies
-                        run: npm ci
+      - name: "Debug: print resolved pinned Node version"
+        run: |
+          echo "Pinned Node (from package.json volta): ${{ steps.node_pin.outputs.version }}"
 
-                      - name: Build
-                        run: npm run build --if-present
+      - name: Setup Node.js (pinned)
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.node_pin.outputs.version }}
+          cache: 'npm'
 
-                      - name: Test
-                        run: npm test
+      - name: Verify Node
+        run: |
+          node -v
 
-                  pinned:
-                    name: Pinned node from package.json
-                    runs-on: ubuntu-latest
-                    needs: assert_matrix
-                    steps:
-                      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm ci
 
-                      - name: Read pinned Node version from package.json
-                        id: node_pin
-                        run: |
-                          NODE_PIN=$(python -c "import json,sys; print(json.load(open('package.json')).get('volta', {}).get('node', ''))")
-                          if [ -z "$NODE_PIN" ]; then echo "volta.node not found in package.json"; exit 1; fi
-                          echo "version=$NODE_PIN" >> $GITHUB_OUTPUT
+      - name: Build
+        run: npm run build --if-present
 
-                      - name: "Debug: print resolved pinned Node version"
-                        run: |
-                          echo "Pinned Node (from package.json volta): ${{ steps.node_pin.outputs.version }}"
-
-                      - name: Setup Node.js (pinned)
-                        uses: actions/setup-node@v4
-                        with:
-                          node-version: ${{ steps.node_pin.outputs.version }}
-                          cache: 'npm'
-
-                      - name: Verify Node
-                        run: |
-                          node -v
-
-                      - name: Install dependencies
-                        run: npm ci
-
-                      - name: Build
-                        run: npm run build --if-present
-
-                      - name: Test
-                        run: npm test
+      - name: Test
+        run: npm test
