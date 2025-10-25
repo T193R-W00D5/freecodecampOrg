@@ -42,7 +42,13 @@ jobs:
     needs: assert_matrix
     strategy:
       matrix:
-        node-version: ${{ fromJson(env.MATRIX_NODE_VERSIONS) }}
+        # GitHub doesn't allow using env.* inside the strategy.matrix expression.
+        # Use an explicit list here. Update this list if you want to change the matrix.
+        node-version:
+          - '18.x'
+          - '20.x'
+          - '21.x'
+          - '22.x'
     steps:
       - uses: actions/checkout@v4
 

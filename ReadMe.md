@@ -64,3 +64,82 @@ npm run dev
 ```
 
 Your server’s now on autopilot ✈️
+
+## Volta (recommended) — pin and use a project Node version
+
+Volta is a lightweight, fast tool for pinning Node, npm, and yarn per-project so every contributor uses the same runtime without global installs.
+
+Quick guide
+
+- Install Volta:
+  - macOS / Linux (recommended):
+```bash
+curl https://get.volta.sh | bash
+```
+  - Windows (Scoop):
+```powershell
+# install scoop first: https://scoop.sh/
+# then:
+scoop install volta
+```
+  - Windows (Chocolatey):
+```powershell
+choco install volta
+```
+
+- Pin the project Node version (example uses the version pinned in this project):
+```bash
+volta pin node@22.21.0
+```
+This writes a `volta` entry into `package.json` so Volta users automatically use that Node version when they cd into the project.
+
+- Alternative: add a `volta` section manually to `package.json`:
+```json
+"volta": {
+  "node": "22.21.0"
+}
+```
+
+- Verify:
+```bash
+node -v        # should match the pinned version for Volta users
+volta list     # shows the pinned tools/versions
+```
+
+Notes & tips
+- Volta is non-destructive and sits in your PATH, so it coexists well with `nvm` (or `nvm-windows`) as long as you understand which manager is first in your PATH. On Windows, Volta is usually friendlier for non-admin installs.
+- If some contributors prefer `nvm`, consider also adding a small `.nvmrc` file containing the major/minor version (for example `22.21.0`) so `nvm` users can run `nvm use`:
+```text
+22.21.0
+```
+- To help CI and other tools, consider adding an `engines` field to `package.json`:
+```json
+"engines": {
+  "node": ">=18 <=22.21.0"
+}
+```
+
+Other small suggestions
+- Use `npm ci` in CI for reproducible installs.
+- Add a small `CONTRIBUTING.md` describing how to run the server locally and how to run tests.
+- Consider adding `.editorconfig` and a formatter/linter (Prettier / ESLint) if you want consistent style across contributors.
+- Keep `.vscode` workspace settings checked in only if they are helpful for all contributors (you already have a workspace node check which is useful).
+
+If you want, I can add a `.nvmrc`, `CONTRIBUTING.md`, or an `engines` entry for you — tell me which and I’ll add it.
+```text
+22.21.0
+```
+- To help CI and other tools, consider adding an `engines` field to `package.json`:
+```json
+"engines": {
+  "node": ">=18 <=22.21.0"
+}
+```
+
+Other small suggestions
+- Use `npm ci` in CI for reproducible installs.
+- Add a small `CONTRIBUTING.md` describing how to run the server locally and how to run tests.
+- Consider adding `.editorconfig` and a formatter/linter (Prettier / ESLint) if you want consistent style across contributors.
+- Keep `.vscode` workspace settings checked in only if they are helpful for all contributors (you already have a workspace node check which is useful).
+
+If you want, I can add a `.nvmrc`, `CONTRIBUTING.md`, or an `engines` entry for you — tell me which and I’ll add it.
