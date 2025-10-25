@@ -73,14 +73,11 @@ jobs:
         node-version:
           - '18.x'
           - '20.x'
-          - '21.x'
           - '22.x'
     steps:
       - uses: actions/checkout@v4
 
-      - name: "Debug: print configured MATRIX_NODE_VERSIONS"
-        run: |
-          echo "MATRIX_NODE_VERSIONS = $MATRIX_NODE_VERSIONS"
+
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -115,9 +112,7 @@ jobs:
           if [ -z "$NODE_PIN" ]; then echo "volta.node not found in package.json"; exit 1; fi
           echo "version=$NODE_PIN" >> $GITHUB_OUTPUT
 
-      - name: "Debug: print resolved pinned Node version"
-        run: |
-          echo "Pinned Node (from package.json volta): ${{ steps.node_pin.outputs.version }}"
+      
 
       - name: Setup Node.js (pinned)
         uses: actions/setup-node@v4

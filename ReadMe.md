@@ -1,5 +1,7 @@
 # Instructions
 
+[![Node.js CI](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/node.js.yml/badge.svg)](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/node.js.yml)
+
 ## Standard Local Server Startup: node
 
 1. Open a new terminal inside VS Code pointed to your project root folder location.
