@@ -34,7 +34,33 @@ jobs:
       - name: Check coverage
         id: check
         run: |
-          python -c "import os,json,sys; pin=os.environ.get('PIN'); if not pin: print('volta.node not found in package.json', file=sys.stderr); sys.exit(1); entries=json.loads(os.environ.get('MATRIX_NODE_VERSIONS','[]')); pin_major=pin.split('.')[0]; covered = any(entry==pin or (isinstance(entry,str) and entry.endswith('.x') and entry.split('.')[0]==pin_major) for entry in entries); if covered: print('covered=true'); sys.exit(0); print(f'ERROR: pinned node {pin} is NOT covered by compatibility matrix (entries: {entries})', file=sys.stderr); sys.exit(2)"
+          # Write a small Python script using a single-quoted here-doc to avoid shell quoting issues
+          cat > _check_matrix.py <<'PY'
+          import os, json, sys
+
+          pin = os.environ.get('PIN')
+          if not pin:
+              print('volta.node not found in package.json', file=sys.stderr)
+              sys.exit(1)
+
+          entries = json.loads(os.environ.get('MATRIX_NODE_VERSIONS', '[]'))
+          pin_major = pin.split('.')[0]
+
+          covered = any(
+              entry == pin
+              or (isinstance(entry, str) and entry.endswith('.x') and entry.split('.')[0] == pin_major)
+              for entry in entries
+          )
+
+          if covered:
+              print('covered=true')
+              sys.exit(0)
+
+          print(f'ERROR: pinned node {pin} is NOT covered by compatibility matrix (entries: {entries})', file=sys.stderr)
+          sys.exit(2)
+          PY
+
+          python _check_matrix.py
 
   compatibility:
     name: Compatibility matrix
