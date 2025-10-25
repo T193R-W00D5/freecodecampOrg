@@ -36,6 +36,27 @@ We also include a lightweight `engines` field in `package.json` to help editors,
 
 Matrix choices: the compatibility matrix intentionally tests recent LTS and modern Node majors (here: 18.x, 20.x, 22.x) to balance test coverage and CI cost. The pinned job still tests the exact Volta-pinned version from `package.json` (for exact reproducibility).
 
+Quick `engines` example (what contributors will see)
+-------------------------------------------------
+
+If `package.json` contains an `engines` entry like:
+
+```json
+"engines": {
+  "node": ">=18 <=22.21.0"
+}
+```
+
+And a contributor runs `npm install` or `npm ci` using an older Node (for example Node 16), `npm` will typically print a warning similar to:
+
+```
+npm WARN EBADENGINE Unsupported engine for freecodecamporg-website-copies@1.0.0: wanted: {"node": ">=18 <=22.21.0"} (current: {"node":"16.20.0", "npm":"..."})
+```
+
+Notes:
+- `npm` only warns by default and does not automatically switch or block installs. Use Volta, `nvm`, or `nvm-windows` to actually select a compatible runtime.
+- This warning helps contributors notice mismatched runtimes early so they can switch to the pinned version before running tests or starting the dev server.
+
 Troubleshooting
 - If CI fails with `pinned node ... is NOT covered by compatibility matrix`, either:
   - Update the compatibility matrix in the workflow to include the matching major (e.g. add `22.x`), or
