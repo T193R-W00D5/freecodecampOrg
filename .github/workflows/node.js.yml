@@ -6,9 +6,9 @@ name: Node.js CI
 # Configure matrix entries here as a JSON array string. Update this to change
 # the compatibility matrix without editing the jobs below.
 # Example: keep majors and also add an exact pinned version:
-#   MATRIX_NODE_VERSIONS: '["18.x","20.x","21.x","22.x","22.21.0"]'
+#   MATRIX_NODE_VERSIONS: '["18.x","20.x","22.x","22.21.0"]'
 env:
-  MATRIX_NODE_VERSIONS: '["18.x", "20.x", "21.x", "22.x"]'
+  MATRIX_NODE_VERSIONS: '["18.x", "20.x", "22.x"]'
 
 on:
   push:

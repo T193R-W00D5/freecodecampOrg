@@ -16,6 +16,9 @@
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.4"
   },
+  "engines": {
+    "node": ">=18 <=22.21.0"
+  },
   "volta": {
     "node": "22.21.0"
   }
