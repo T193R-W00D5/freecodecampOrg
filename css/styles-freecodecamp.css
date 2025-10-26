@@ -19,7 +19,7 @@
   --quaternary-color: #ffffff;
   --main-box-shadow: 2px 2px 8px rgba(237, 237, 241, 0.2); /* = #ededf133 
   --primary-background: #110e33; /* Primary background color */
-  --code-text-bg-color: #32324e; /* Geoff: this is the background of code in paragraphs */
+  --code-text-bg-color: #32324e; /* T193R-W00D5: this is the background of code in paragraphs */
   --main-margin-left-right: 240px;
 }
 /* End of global styles */
@@ -76,7 +76,7 @@ main, header, footer, banner {
   /* From CoPilot: Make main, header, footer, and banner have 
   solid backgrounds to cover the techy pattern */
   position: relative;
-  z-index: 1; /* Geoff: I may need to increase this if something inside 
+  z-index: 1; /* T193R-W00D5: I may need to increase this if something inside 
                  these elements has z-index or for things like snackbars */
   background: var(--main-bg-color);
   border: var(--main-border-color) solid 2px;
@@ -189,13 +189,13 @@ iframe {
 
 /* Below are styles from freecodecamp.org which I have modified */
 
-/* Geoff: This is the main style for <code> but it gets altered when in a <pre> code block */
+/* T193R-W00D5: This is the main style for <code> but it gets altered when in a <pre> code block */
 code {
   background-color: var(--code-text-bg-color);
   /* 1px solid var(--gray-45); */
   border: #bbbcc0 solid 1px;
   border-radius: 1px;
-  color: var(--tertiary-color); /* Geoff: this is the text color of code in paragraphs */
+  color: var(--tertiary-color); /* T193R-W00D5: this is the text color of code in paragraphs */
   font-family: var(--font-family-monospace);
   font-size: 90%;
   overflow-wrap: anywhere;
@@ -258,7 +258,7 @@ code[class=language-markup] {
     color: #008040
 }
 
-/* Geoff: language-css stuff */
+/* T193R-W00D5: language-css stuff */
 :not(.dark-palette) .language-css .token.string,:not(.dark-palette) .style .token.string,:not(.dark-palette) .token.entity,:not(.dark-palette) .token.operator,:not(.dark-palette) .token.url {
     color: #38425c
 }
@@ -282,16 +282,16 @@ code[class=language-markup] {
 /* ###################################################################################### */
 /* ###################################################################################### */
 
-/* Geoff: I'm not sure if this style is used */
+/* T193R-W00D5: I'm not sure if this style is used */
 :not(.dark-palette)code[class*=language-],:not(.dark-palette)pre[class*=language-] {
     word-wrap: normal;
     color: var(--secondary-color);    
-    font-family: Broadway; /* Geoff: set this font to see if it does anything */
+    font-family: Broadway; /* T193R-W00D5: set this font to see if it does anything */
     /* font-family: var(--main-font-family); */
     /* font-size: 1em; */
     /* -ms-hyphens: none; */
     /* hyphens: none; */
-    line-height: 5; /* Geoff: I made this line height really big to test if it does anything */
+    line-height: 5; /* T193R-W00D5: I made this line height really big to test if it does anything */
     -moz-tab-size: 4;
     -o-tab-size: 4;
     tab-size: 4;
@@ -302,17 +302,17 @@ code[class=language-markup] {
     word-spacing: normal;
 }
 
-/* Geoff: I'm not sure if this style is used */
+/* T193R-W00D5: I'm not sure if this style is used */
 :not(.dark-palette)pre[class*=language-] code[class*=language-] {
     /* color: var(--quaternary-color); */    
-    color: purple; /* Geoff: set this color to see if it does anything */
+    color: purple; /* T193R-W00D5: set this color to see if it does anything */
 }
 
-/* Geoff: I'm not sure if this style is used */
+/* T193R-W00D5: I'm not sure if this style is used */
 :not(.dark-palette)pre[class*=language-] {
     /* margin: .5em 0; */
     /* overflow: auto; */    
-    overflow: wrap; /* Geoff: changed from auto to wrap to see if it does anything */
+    overflow: wrap; /* T193R-W00D5: changed from auto to wrap to see if it does anything */
     /* padding: 1em; */
 }
 
@@ -338,10 +338,10 @@ code[class=language-markup] {
     color: #608b4e
 }
 
-/* Geoff: This sets the style of punctuation in the <pre> code blocks */
+/* T193R-W00D5: This sets the style of punctuation in the <pre> code blocks */
 :not(.dark-palette).token.punctuation {
     color: #ff0;
-    /* Geoff: set color below for testing */
+    /* T193R-W00D5: set color below for testing */
     /* color: orange; */
 }
 
@@ -355,7 +355,7 @@ code[class=language-markup] {
 
 :not(.dark-palette).token.boolean,:not(.dark-palette).token.function,:not(.dark-palette).token.number {
     /* color: #569cd6 */
-    color: orange; /* Geoff: set this color to see if it does anything */
+    color: orange; /* T193R-W00D5: set this color to see if it does anything */
 }
 
 :not(.dark-palette).token.class-name,:not(.dark-palette).token.constant,:not(.dark-palette).token.property,:not(.dark-palette).token.symbol {
@@ -364,17 +364,17 @@ code[class=language-markup] {
 
 :not(.dark-palette).token.atrule,:not(.dark-palette).token.builtin,:not(.dark-palette).token.important,:not(.dark-palette).token.keyword,:not(.dark-palette).token.selector {
     /* color: #569cd6 */
-    color: orange; /* Geoff: set this color to see if it does anything */
+    color: orange; /* T193R-W00D5: set this color to see if it does anything */
 }
 
 :not(.dark-palette).token.attr-value,:not(.dark-palette).token.char,:not(.dark-palette).token.regex,:not(.dark-palette).token.string,:not(.dark-palette).token.variable {
     color: #7ec699;
 }
 
-/*Geoff: This sets the style of attribute values in html tags of the <pre> code blocks */
+/*T193R-W00D5: This sets the style of attribute values in html tags of the <pre> code blocks */
 :not(.dark-palette).token.attr-value {
     color: #7ec699;
-    /* Geoff: set color below for testing */
+    /* T193R-W00D5: set color below for testing */
     /* color: orange;  */
 }
 
@@ -419,12 +419,12 @@ code[class=language-markup] {
     color: #569cd6;
 } */
 
-/* Geoff: language-css stuff */
+/* T193R-W00D5: language-css stuff */
 /* :not(.dark-palette) .language-css .token.string,:not(.dark-palette) .style .token.string,:not(.dark-palette) .token.entity,:not(.dark-palette) .token.operator,:not(.dark-palette) .token.url {
     color: #38425c
 } */
 
-/* Geoff: language-css stuff */
+/* T193R-W00D5: language-css stuff */
 .dark-palette .language-css .token.string,.dark-palette .style .token.string,.dark-palette .token.entity,.dark-palette .token.operator,.dark-palette .token.url {
     color: #38425c
 }
@@ -450,13 +450,13 @@ pre[class*=language-].line-numbers>code {
 }
 
 code[class*=language-],pre[class*=language-] {
-    border: none; /* Geoff: turn off code text border in language-<pre> code block */
+    border: none; /* T193R-W00D5: turn off code text border in language-<pre> code block */
     border-radius: 0;
     word-wrap: normal;
     background: none;
     color: var(--main-text-color);
     font-family: Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
-    font-size: 1.05em; /* Geoff: This sets font size in language- <pre> code block */
+    font-size: 1.05em; /* T193R-W00D5: This sets font size in language- <pre> code block */
     /* -ms-hyphens: none; */
     /* hyphens: none; */
     line-height: 1.5;
@@ -480,12 +480,12 @@ code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=
     text-shadow: none
 }
 
-/* Geoff: This is the main style for the language- <pre> <code> block */
+/* T193R-W00D5: This is the main style for the language- <pre> <code> block */
 pre[class*=language-] {
     overflow: auto;
-    padding: 0.5em; /* Geoff: This is the padding for the language- <pre> <code> block */
-    margin-left: 0em; /* Geoff: margin of the <pre> <code> block to the main element */
-    padding-left: 0em; /* Geoff: left padding of text within the <pre> <code> block */
+    padding: 0.5em; /* T193R-W00D5: This is the padding for the language- <pre> <code> block */
+    margin-left: 0em; /* T193R-W00D5: margin of the <pre> <code> block to the main element */
+    padding-left: 0em; /* T193R-W00D5: left padding of text within the <pre> <code> block */
 }
 
 :not(pre)>code[class*=language-],pre[class*=language-] {

@@ -1,6 +1,8 @@
 # Instructions
 
 [![Node.js CI](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/node.js.yml/badge.svg)](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/node.js.yml)
+[![E2E Tests](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/e2e-tests.yml/badge.svg)](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/e2e-tests.yml)
+[![CI](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/ci.yml/badge.svg)](https://github.com/T193R-W00D5/freecodecampOrg/actions/workflows/ci.yml)
 
 ## Standard Local Server Startup: node
 
@@ -65,7 +67,51 @@ Then run:
 npm run dev
 ```
 
-Your server’s now on autopilot ✈️
+Your server's now on autopilot ✈️
+
+## Testing
+
+This project includes both unit tests (Jest) and end-to-end tests (Playwright).
+
+### Quick Start Testing
+```bash
+# Run all unit tests
+npm test
+
+# Run all E2E tests (headless)
+npm run test:e2e
+
+# Run E2E tests with browser visible (great for debugging)
+npm run test:e2e:headed
+
+# Run both unit and E2E tests
+npm run test:all
+```
+
+### Available Test Commands
+```bash
+# Unit Tests (Jest)
+npm test                # Jest unit tests
+npm run test:unit       # Same as above
+
+# E2E Tests (Playwright)
+npm run test:e2e        # All browsers, headless
+npm run test:e2e:headed # All browsers, visible
+npm run test:e2e:debug  # Debug mode with pauses
+npm run test:e2e:ui     # Interactive UI mode
+
+# Browser-specific E2E tests
+npm run test:e2e:chrome    # Chromium only
+npm run test:e2e:firefox   # Firefox only  
+npm run test:e2e:webkit    # WebKit/Safari only
+```
+
+### Test Setup
+1. **Unit tests** are in `__tests__/` directory (Jest)
+2. **E2E tests** are in `tests/e2e/` directory (Playwright)
+3. **Test results** saved to `test-results/` directory
+
+For detailed testing information, see [docs/PLAYWRIGHT_GUIDE.md](docs/PLAYWRIGHT_GUIDE.md).
 
 ## Volta (recommended) — pin and use a project Node version
 

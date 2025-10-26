@@ -16,7 +16,7 @@ Progress update: I ran `node -v` and searched the repo for version files/workflo
 
 Starting (4/4) *Summarize & advise*
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/package.json)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/package.json)
 
 I'll mark the final todo as completed and finish the summary. 
 
@@ -341,12 +341,12 @@ if(-not $current.StartsWith($volta)) {
 # Use nvm
 nvm use 18.17.0
 # Prepend nvm's node path for current session only (example path — adjust if different)
-$env:PATH = 'C:\Users\Geo\AppData\Roaming\nvm;' + $env:PATH
+$env:PATH = 'C:\Users/<username>/AppData\Roaming\nvm;' + $env:PATH
 node -v
 ```
 - Or call the nvm-installed node by full path:
 ```powershell
-& 'C:\Users\Geo\AppData\Roaming\nvm\v18.17.0\node.exe' -v
+& 'C:\Users/<username>/AppData\Roaming\nvm\v18.17.0\node.exe' -v
 ```
 
 6) Potential problems to watch for
@@ -742,7 +742,7 @@ T193R-W00D5: I would like to "Create a workflow that installs Volta in the runne
 
 GitHub Copilot: I'll read the existing GitHub Actions workflow to update it safely — outcome: get current node.js.yml content so I can add a Volta install + pinned-node step without breaking the existing matrix.
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 I'll add a new workflow file `.github/workflows/volta-node-ci.yml` that runs on Ubuntu and Windows runners, installs Volta, reads the pinned Node version from package.json and installs that Node via Volta before running install/build/test. Expected outcome: new workflow file added without touching the existing workflow.
 
@@ -787,7 +787,7 @@ T193R-W00D5: Yes, to have a faster CI let's go with "Adjust the workflow to use 
 
 GitHub Copilot: I'll read the existing Volta-based workflow, then replace its Volta install steps with steps that read the pinned version from package.json and call `actions/setup-node@v4` using that value — outcome: faster CI that uses the pinned Node without installing Volta. I'll first show the current file, then apply the edit.
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/volta-node-ci.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/volta-node-ci.yml)
 
 Using "Apply Patch"
 
@@ -1093,7 +1093,7 @@ Using "Apply Patch"
 ```
 
 
-Created [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/docs/ci.md)
+Created [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/docs/ci.md)
 
 Added 1 todo
 
@@ -1227,7 +1227,7 @@ Made changes.
 T193R-W00D5: I think this is all great. Thank you for your help. I would like to add this project to as a new repository in my Github account, let's take this slowly since I have only done this once before. (I do have experience with Azure DevOps for work, but this is for my personal Github account.)
 First question is: Do you recommend any changes to my .gitignore file at this time?
 
-GitHub Copilot: Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.gitignore)
+GitHub Copilot: Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.gitignore)
 
 Added 1 todo
 
@@ -1528,7 +1528,7 @@ T193R-W00D5: I may have messed up.
 
 GitHub Copilot: I'll read the workflow file to find the YAML errors and then propose/fix the minimal syntax issues so VS Code stops showing errors. I'll open node.js.yml now.
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Thanks — that’s fine. Let’s debug this together slowly.
 
@@ -1553,7 +1553,7 @@ T193R-W00D5: Yes
 GitHub Copilot: I'll run a quick YAML syntax check using Python's PyYAML on the workflow file; if PyYAML isn't available the command will indicate that and I'll explain next steps. I'll run the check now and report the output.
 
 Ran terminal command: python -c "import sys, yaml
-p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'
+p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'
 try:
     import yaml
 except Exception as e:
@@ -1591,24 +1591,24 @@ T193R-W00D5: Sorry, new computer. I installed python 3.13 from the Microsoft sto
 
 GitHub Copilot: I'll attempt a quick YAML parse: install PyYAML for the current user (if missing) and then parse node.js.yml. This runs Python's pip install (user scope) then the parse; output will show success or the exact parse error.
 
-Ran terminal command: python -m pip install --user pyyaml ; python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -m pip install --user pyyaml ; python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#1-1), lines 1 to 120
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#1-1), lines 1 to 120
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#120-120), lines 120 to 141
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#120-120), lines 120 to 141
 
-Ran terminal command: powershell -Command "$i=1; Get-Content 'c:\Users\Geo\Projects\freecodecampOrg\.github\workflows\node.js.yml' | ForEach-Object { '{0,4}: {1}' -f $i, $_; $i++ }"
+Ran terminal command: powershell -Command "$i=1; Get-Content 'c:\Users/<username>/Projects\freecodecampOrg\.github\workflows\node.js.yml' | ForEach-Object { '{0,4}: {1}' -f $i, $_; $i++ }"
 
-Ran terminal command: powershell -Command "$lines = Get-Content 'c:\Users\Geo\Projects\freecodecampOrg\.github\workflows\node.js.yml'; for ($i=0; $i -lt $lines.Count; $i++) { $n = $i+1; Write-Output (\"{0}: {1}\" -f $n, $lines[$i]) }"
+Ran terminal command: powershell -Command "$lines = Get-Content 'c:\Users/<username>/Projects\freecodecampOrg\.github\workflows\node.js.yml'; for ($i=0; $i -lt $lines.Count; $i++) { $n = $i+1; Write-Output (\"{0}: {1}\" -f $n, $lines[$i]) }"
 
-Ran terminal command: powershell -Command "Get-Content 'c:\Users\Geo\Projects\freecodecampOrg\.github\workflows\node.js.yml' | ForEach-Object -Begin {$i=1} -Process { \"$i`: $_\"; $i++ }"
+Ran terminal command: powershell -Command "Get-Content 'c:\Users/<username>/Projects\freecodecampOrg\.github\workflows\node.js.yml' | ForEach-Object -Begin {$i=1} -Process { \"$i`: $_\"; $i++ }"
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#30-30), lines 30 to 50
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#30-30), lines 30 to 50
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#50-50), lines 50 to 90
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#50-50), lines 50 to 90
 
 Ran terminal command: python - <<'PY'
-p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'
+p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'
 with open(p,'rb') as f:
     data=f.read().splitlines()
 for i,l in enumerate(data, start=1):
@@ -1616,27 +1616,27 @@ for i,l in enumerate(data, start=1):
         print(i, repr(l))
 PY
 
-Ran terminal command: python -c "p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'; import sys; lines=open(p,'rb').read().splitlines(); found=False
+Ran terminal command: python -c "p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'; import sys; lines=open(p,'rb').read().splitlines(); found=False
 for i,l in enumerate(lines,1):
     if b'\t' in l:
         print(i, repr(l)); found=True
 if not found:
     print('NO_TABS')"
 
-Ran terminal command: python -c "p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'; import sys
+Ran terminal command: python -c "p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'; import sys
 with open(p,'r',encoding='utf-8') as f:
     for i,l in enumerate(f,1):
         print(f'{i:03}: {l.rstrip()}')"
 
 Ran terminal command: python - <<'PY'
-p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'
+p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'
 with open(p,'r',encoding='utf-8') as f:
     lines=f.readlines()
 for i in range(30,46):
     print(f"{i+1:03}: {repr(lines[i])}")
 PY
 
-Ran terminal command: python -c "p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'; lines=open(p,'r',encoding='utf-8').read().splitlines(True); import sys
+Ran terminal command: python -c "p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'; lines=open(p,'r',encoding='utf-8').read().splitlines(True); import sys
 for i in range(30,46): print(f'{i+1:03}: {lines[i]!r}')"
 
 T193R-W00D5: let's pause. I keep seeing in the terminal results "The term 'PY' is not recognized as the name of a cmdlet, function, script file, or operable program." Let me close VS Code, and check that PY is recongnized in a terminal, and then I will reopen VS Code and we can continue.
@@ -1661,11 +1661,11 @@ If you installed from the Microsoft Store and Windows still says the alias isn�
 Command to (re)run the YAML parse (once python is available)
 - This will install PyYAML for your user and test the workflow YAML:
   python -m pip install --user pyyaml
-  python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+  python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 If you use the py launcher instead of python:
   py -3 -m pip install --user pyyaml
-  py -3 -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+  py -3 -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 When to reopen VS Code
 - After installing or enabling Python, close all VS Code windows and reopen so the integrated terminal picks up the new PATH and aliases.
@@ -1686,7 +1686,7 @@ The py launcher for version management and debugging.
 
 GitHub Copilot: I'll re-run the YAML parse now (install PyYAML if missing) and report the result so we can fix any remaining syntax issues in node.js.yml. Expected outcome: either "YAML_OK" or a precise parse error I'll use to fix the file.
 
-Ran terminal command: python -m pip install --user pyyaml ; python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -m pip install --user pyyaml ; python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 Using "Apply Patch"
 
@@ -1696,7 +1696,7 @@ Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#28-28), lines 28 to 44
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#28-28), lines 28 to 44
 
 Using "Apply Patch"
 
@@ -1706,7 +1706,7 @@ Using "Apply Patch"
 ```
 
 
-Ran terminal command: python -c "p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'; lines=open(p,'r',encoding='utf-8').read().splitlines(True); import sys
+Ran terminal command: python -c "p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'; lines=open(p,'r',encoding='utf-8').read().splitlines(True); import sys
 for i in range(30,75):
     print(f'{i+1:03}: {repr(lines[i])}')"
 
@@ -1718,32 +1718,32 @@ Using "Apply Patch"
 ```
 
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 Summarized conversation history
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Using "Apply Patch"
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#1-1), lines 1 to 20
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#1-1), lines 1 to 20
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#120-120), lines 120 to 141
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#120-120), lines 120 to 141
 
 Searched text for ```` ``` ```` (`**/.github/workflows/**`), no results
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Using "Apply Patch"
 
 Ran terminal command: python - <<'PY'
-p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'
+p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'
 with open(p,'rb') as f:
     data=f.read()
 print(repr(data[:60]))
 PY
 
-Ran terminal command: python -c "p='c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml'; print(repr(open(p,'rb').read()[:120]))"
+Ran terminal command: python -c "p='c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml'; print(repr(open(p,'rb').read()[:120]))"
 
 Made changes.
 
@@ -1753,25 +1753,15 @@ GitHub Copilot: I'll first read the workspace todo list (for tracking), then ope
 
 Read todo list
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#70-70), lines 70 to 130
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#70-70), lines 70 to 130
 
 Using "Apply Patch"
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#1-1), lines 1 to 12
-
-Using "Apply Patch"
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#1-1), lines 1 to 12
 
 Using "Apply Patch"
 
 Using "Apply Patch"
-
-
-```
-
-```
-
-
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#200-200), lines 200 to 280
 
 Using "Apply Patch"
 
@@ -1781,11 +1771,21 @@ Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#200-200), lines 200 to 280
+
+Using "Apply Patch"
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Searched text for `name: Node.js CI` (`**/.github/workflows/**`), 2 results
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#140-140), lines 140 to 240
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#140-140), lines 140 to 240
 
 Using "Apply Patch"
 
@@ -1795,7 +1795,7 @@ Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Using "Apply Patch"
 
@@ -1851,7 +1851,7 @@ Using "Apply Patch"
 ```
 
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 Made changes.
 
@@ -1859,7 +1859,7 @@ T193R-W00D5: Seems like you have been working for awhile now. That's OK, because
 
 GitHub Copilot: I'll run a quick YAML parse to confirm the workflow is syntactically valid (this will show whether the linter warnings are only static false-positives or real YAML errors).
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 Result: YAML_OK — the workflow is valid YAML and parses successfully.
 
@@ -2035,7 +2035,7 @@ IndentationError: unexpected indent
 Error: Process completed with exit code 1.
 
 
-GitHub Copilot: Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+GitHub Copilot: Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Using "Apply Patch"
 
@@ -2045,7 +2045,7 @@ Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml#30-30), lines 30 to 80
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml#30-30), lines 30 to 80
 
 Using "Apply Patch"
 
@@ -2055,7 +2055,7 @@ Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Thanks — that output explains the problem.
 
@@ -2114,7 +2114,7 @@ What I recommend now
 - After editing, run a local YAML parse to verify syntax:
 
   ```powershell
-  python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+  python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
   ```
 
 - Commit and push the change; it will trigger Actions and you can confirm the Check coverage step passes.
@@ -2137,7 +2137,7 @@ GitHub Copilot: Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 Using "Apply Patch"
 
@@ -2147,9 +2147,9 @@ Using "Apply Patch"
 ```
 
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 Done — I applied the safer one-line Python check and normalized the indentation for the compatibility + pinned jobs.
 
@@ -2688,9 +2688,9 @@ Using "Apply Patch"
 ```
 
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 Done — I fixed the workflow and validated it locally.
 
@@ -2737,7 +2737,7 @@ GitHub Copilot: Using "Apply Patch"
 ```
 
 
-Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
+Ran terminal command: python -c "import yaml,sys; yaml.safe_load(open('c:/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml')); print('YAML_OK')"
 
 Done — I updated node.js.yml to make the matrix configurable with a literal JSON string.
 
@@ -2772,25 +2772,17 @@ Before we commit  and change, can you add to my ReadMe.md file information for h
 
 GitHub Copilot: Using "Apply Patch"
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/ReadMe.md)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/ReadMe.md)
 
 Using "Apply Patch"
 
 Using "Apply Patch"
 
-Created [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/ReadMe.md)
+Created [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/ReadMe.md)
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/ReadMe.md#1-1), lines 1 to 8
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/ReadMe.md#1-1), lines 1 to 8
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/ReadMe.md#60-60), lines 60 to 67
-
-Using "Apply Patch"
-
-
-```
-
-```
-
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/ReadMe.md#60-60), lines 60 to 67
 
 Using "Apply Patch"
 
@@ -2800,7 +2792,15 @@ Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/ReadMe.md)
+Using "Apply Patch"
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/ReadMe.md)
 
 Using "Apply Patch"
 
@@ -2810,7 +2810,7 @@ Using "Apply Patch"
 ```
 
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/ReadMe.md)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/ReadMe.md)
 
 Using "Apply Patch"
 
@@ -2869,7 +2869,7 @@ Ran terminal command: gh run list -R T193R-W00D5/freecodecampOrg --limit 5; $id 
 
 I'll open the workflow file to inspect the exact step commands and env usage so I can propose a precise fix.
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.github/workflows/node.js.yml)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.github/workflows/node.js.yml)
 
 I'll fix the mismatched quote in the `Check coverage` step of node.js.yml so the python -c string opens and closes with the same quote (double quote). This should eliminate the shell EOF/quote error in Actions. I'll apply a single-line patch.
 
@@ -2989,7 +2989,7 @@ Using "Apply Patch"
 ```
 
 
-Created [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/.nvmrc)
+Created [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/.nvmrc)
 
 Using "Apply Patch"
 
@@ -3120,7 +3120,7 @@ GitHub Copilot: I'll mark the remove-21.x todo as in-progress, then update the w
 
 Added 2 todos
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/package.json)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/package.json)
 
 Now I'll remove "21.x" from the workflow and add an `engines` field to package.json, then run the test suite locally to verify everything still passes.
 
@@ -3180,7 +3180,7 @@ And then you can push the changes.
 
 GitHub Copilot: I'll update ci.md to add a short note about the `engines` field and the matrix choices, run a quick local verification, then push the commits to the `main` branch on GitHub. I'll show a brief explanation of what the `engines` field does after the push.
 
-Read [](file:///c%3A/Users/Geo/Projects/freecodecampOrg/docs/ci.md)
+Read [](file:///c%3A/Users/<username>/Projects/freecodecampOrg/docs/ci.md)
 
 I'll update ci.md to reflect the current matrix (remove 21.x), add a short note about the `engines` field and why the matrix choices were made, then commit and push the change to `main`. Expected outcome: ci.md updated in the repo and pushed to GitHub.
 
@@ -3487,7 +3487,7 @@ Nice — here are clear, step-by-step Git commands you can run in PowerShell to 
 
 Before you start
 - From PowerShell make sure you're in the repo root:
-  Set-Location 'C:\Users\Geo\Projects\freecodecampOrg'
+  Set-Location 'C:\Users/<username>/Projects\freecodecampOrg'
 
 Step 0 — sanity checks (optional but useful)
 - See current branch and status:
@@ -3596,7 +3596,7 @@ Great — here are the updated, PowerShell-ready manual Git steps tailored for p
 
 1) Change to repo root (if needed)
 ```powershell
-Set-Location 'C:\Users\Geo\Projects\freecodecampOrg'
+Set-Location 'C:\Users/<username>/Projects\freecodecampOrg'
 ```
 
 2) Confirm you're on `main` and up to date
