@@ -12,6 +12,14 @@ export const test = base.extend({
     await use(page);
   },
 
+  // Custom fixture for homepage testing
+  homePage: async ({ page }, use) => {
+    await page.goto('/');
+    // Wait for page to be fully loaded
+    await page.waitForLoadState('networkidle');
+    await use(page);
+  },
+
   // Custom fixture for testing interactive elements
   interactivePage: async ({ page }, use) => {
     await page.goto('/pages/interactive-features.html');

@@ -1,11 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/test-fixtures.js';
 
 test.describe('Course Navigation Tests', () => {
-  test('should navigate to course curriculum page', async ({ page }) => {
-    await page.goto('/');
-    
+  test('should navigate to course curriculum page', async ({ homePage }) => {
     // Click on the course link
-    const courseLink = page.locator('a[href*="Certified-Full-Stack-Developer-Curriculum"]');
+    const courseLink = homePage.locator('a[href*="Certified-Full-Stack-Developer-Curriculum"]');
     
     // Get the href to understand the navigation
     const href = await courseLink.getAttribute('href');
@@ -13,7 +11,7 @@ test.describe('Course Navigation Tests', () => {
     
     // Click and wait for navigation or handle the response
     const [response] = await Promise.all([
-      page.waitForResponse(response => response.url().includes('Certified-Full-Stack-Developer-Curriculum') || response.status() === 404),
+      homePage.waitForResponse(response => response.url().includes('Certified-Full-Stack-Developer-Curriculum') || response.status() === 404),
       courseLink.click()
     ]);
     
@@ -25,24 +23,22 @@ test.describe('Course Navigation Tests', () => {
     expect(response.status()).toBeLessThanOrEqual(404);
   });
 
-  test('should handle static file serving', async ({ page }) => {
-    await page.goto('/');
-    
+  test('should handle static file serving', async ({ homePage }) => {
     // Test CSS file loads
-    const response = await page.goto('/css/styles-freecodecamp.css');
+    const response = await homePage.goto('/css/styles-freecodecamp.css');
     expect(response?.status()).toBe(200);
     expect(response?.headers()['content-type']).toContain('text/css');
   });
 
-  test('should handle favicon properly', async ({ page }) => {
+  test('should handle favicon properly', async ({ homePage }) => {
     // Test favicon loads
-    const response = await page.goto('/assets/favicon/Wizard.ico');
+    const response = await homePage.goto('/assets/favicon/Wizard.ico');
     expect(response?.status()).toBe(200);
   });
 
-  test('should handle 404 gracefully', async ({ page }) => {
+  test('should handle 404 gracefully', async ({ homePage }) => {
     // Test non-existent page
-    const response = await page.goto('/non-existent-page', { 
+    const response = await homePage.goto('/non-existent-page', { 
       waitUntil: 'networkidle' 
     });
     
