@@ -79,8 +79,71 @@ tests/
 │   ├── navigation.spec.js  # Navigation tests
 │   └── interactive-features.spec.js
 ├── fixtures/               # Test data and utilities
+│   └── test-fixtures.js    # Custom fixtures for eliminating code duplication
 └── test-results/          # Generated reports and artifacts
 ```
+
+### Custom Test Fixtures
+
+This project uses custom Playwright fixtures to eliminate code duplication and improve test reliability. Instead of repeating navigation and setup code in every test, we use centralized fixtures.
+
+#### Available Fixtures
+
+**`serverRunning`** - Validates that the development server is responding:
+```javascript
+// Automatically validates server health before tests
+test('should work', async ({ serverRunning }) => {
+  // Server is guaranteed to be running and responding
+});
+```
+
+**`homePage`** - Navigates to homepage with proper wait conditions:
+```javascript
+// Automatically navigates to / and waits for networkidle
+test('should test homepage', async ({ homePage }) => {
+  // Page is already loaded and ready
+  await expect(homePage.locator('h1')).toBeVisible();
+});
+```
+
+**`interactivePage`** - Navigates to interactive features page:
+```javascript
+// Automatically navigates to /pages/interactive-features.html
+test('should test interactions', async ({ interactivePage }) => {
+  // Page is loaded with JavaScript ready
+  await expect(interactivePage.locator('#calculator')).toBeVisible();
+});
+```
+
+#### Before vs After Fixtures
+
+**Before (repetitive code in every test):**
+```javascript
+test.beforeEach(async ({ page }) => {
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+});
+
+test('homepage title', async ({ page }) => {
+  await expect(page).toHaveTitle(/freeCodeCamp/);
+});
+```
+
+**After (using custom fixtures):**
+```javascript
+import { test, expect } from '../fixtures/test-fixtures.js';
+
+test('homepage title', async ({ homePage }) => {
+  await expect(homePage).toHaveTitle(/freeCodeCamp/);
+});
+```
+
+#### Benefits of Custom Fixtures
+- **Eliminates code duplication** across test files
+- **Consistent setup** ensures reliable test conditions
+- **Easier maintenance** - change navigation logic in one place
+- **Better error handling** - centralized retry logic
+- **Improved readability** - tests focus on actual testing, not setup
 
 ### Server Configuration
 - **Base URL**: `http://localhost:3010`
@@ -138,6 +201,30 @@ npx playwright show-trace test-results/[test-name]/trace.zip
 ## Writing New Tests
 
 ### Test File Template
+
+#### Using Custom Fixtures (Recommended)
+```javascript
+import { test, expect } from '../fixtures/test-fixtures.js';
+
+test.describe('Feature Name', () => {
+  test('should test homepage feature', async ({ homePage }) => {
+    // homePage is already loaded and ready
+    await expect(homePage.locator('selector')).toBeVisible();
+  });
+
+  test('should test interactive feature', async ({ interactivePage }) => {
+    // interactivePage is already loaded with JavaScript ready
+    await expect(interactivePage.locator('#calculator')).toBeVisible();
+  });
+
+  test('should verify server is running', async ({ serverRunning }) => {
+    // Server health is automatically validated
+    // Your test code here
+  });
+});
+```
+
+#### Using Standard Playwright (Alternative)
 ```javascript
 import { test, expect } from '@playwright/test';
 
@@ -154,12 +241,14 @@ test.describe('Feature Name', () => {
 ```
 
 ### Best Practices
-1. **Use descriptive test names**
-2. **Group related tests** with `test.describe()`
-3. **Use `beforeEach`** for common setup
-4. **Prefer stable selectors** (data-testid, role, text)
-5. **Wait for elements** before interacting
-6. **Add assertions** to verify state changes
+1. **Use custom fixtures** to eliminate code duplication
+2. **Import from fixtures** instead of @playwright/test when available
+3. **Use descriptive test names** that explain what is being tested
+4. **Group related tests** with `test.describe()`
+5. **Prefer fixture-based setup** over `beforeEach` when possible
+6. **Use stable selectors** (data-testid, role, text)
+7. **Wait for elements** before interacting
+8. **Add assertions** to verify state changes
 
 ### Common Patterns
 ```javascript
@@ -192,12 +281,30 @@ await expect(page.locator('selector')).toHaveText('Text');
 - **Conditional execution**: Full tests only on main branch
 
 ### Local CI Simulation
+
+#### Bash/Linux/macOS
 ```bash
 # Simulate CI environment
 CI=true npm run test:e2e
 
 # Test specific browser like CI
 npx playwright test --project=chromium
+```
+
+#### PowerShell/Windows
+```powershell
+# Set CI environment variable
+$env:CI = "true"
+npm run test:e2e
+
+# Check if CI is set
+echo $env:CI
+
+# Clear CI mode when done
+$env:CI = $null
+
+# Alternative: Run with CI in one line
+$env:CI = "true"; npm run test:e2e; $env:CI = $null
 ```
 
 ## Troubleshooting
@@ -273,6 +380,7 @@ npx playwright show-system
 
 ## Environment Variables
 
+### Bash/Linux/macOS
 Set these in your shell or `.env` file:
 
 ```bash
@@ -287,6 +395,41 @@ DEBUG=pw:*
 
 # CI mode
 CI=true
+```
+
+### PowerShell/Windows
+```powershell
+# Force headless mode
+$env:HEADLESS = "true"
+
+# Set custom timeout
+$env:TIMEOUT = "60000"
+
+# Enable debug logging
+$env:DEBUG = "pw:*"
+
+# CI mode
+$env:CI = "true"
+
+# Check current environment variables
+echo "CI: $env:CI"
+echo "HEADLESS: $env:HEADLESS"
+
+# Clear environment variables when done
+$env:CI = $null
+$env:HEADLESS = $null
+$env:DEBUG = $null
+$env:TIMEOUT = $null
+```
+
+### Using Environment Variables
+```powershell
+# Example: Run tests in CI mode with debug logging
+$env:CI = "true"
+$env:DEBUG = "pw:*"
+npm run test:e2e
+$env:CI = $null
+$env:DEBUG = $null
 ```
 
 ## Next Steps
