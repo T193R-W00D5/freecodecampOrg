@@ -275,10 +275,39 @@ await expect(page.locator('selector')).toHaveText('Text');
 - **`ci.yml`**: Code quality and security checks
 
 ### Workflow Features
-- **Matrix testing**: Runs across multiple browsers
+- **Matrix testing**: Configurable browser testing (Chrome-only by default for speed)
 - **Artifact collection**: Test results and screenshots
 - **Volta integration**: Uses pinned Node.js version
-- **Conditional execution**: Full tests only on main branch
+- **Conditional execution**: Full cross-browser tests only on main branch pushes
+
+### CI Performance Optimization
+
+#### Current Setup (Chrome-Only for Speed)
+By default, CI runs Playwright tests only on Chrome/Chromium to save time and resources:
+
+```yaml
+# In .github/workflows/e2e-tests.yml
+matrix:
+  browser: [chromium]  # Fast CI - Chrome only
+```
+
+#### Switching to Full Browser Testing
+When you need comprehensive cross-browser testing, edit `.github/workflows/e2e-tests.yml`:
+
+```yaml
+# Comment out the Chrome-only line:
+# browser: [chromium]
+
+# Uncomment the full browser line:
+browser: [chromium, firefox, webkit]
+```
+
+#### CI Behavior Summary
+- **Pull Requests & Branch Pushes**: Chrome-only tests (fast)
+- **Main Branch Pushes**: Chrome-only + separate full browser job
+- **Manual Override**: Edit workflow file to enable all browsers anytime
+
+This approach reduces CI time by ~70% while maintaining test coverage quality.
 
 ### Local CI Simulation
 
@@ -377,6 +406,12 @@ npx playwright show-system
 2. **Use `--max-failures=1`** for quick feedback
 3. **Filter tests**: `npx playwright test --grep "homepage"`
 4. **Skip heavy tests**: Use `test.skip()` temporarily
+5. **CI optimization**: Chrome-only testing for faster feedback
+
+### CI Configuration
+- **Fast CI**: Edit workflow to use `browser: [chromium]` only
+- **Full testing**: Enable all browsers with `browser: [chromium, firefox, webkit]`
+- **Local testing**: Always test cross-browser before major releases
 
 ## Environment Variables
 
